@@ -1,9 +1,9 @@
 # Práctica - Servicios Telemáticos Avanzados (STA)
 
-Repositorio de la asignatura con la implementación de la interfaz web, consumo de la API de OMDb y desarrollo de un backend completo con Python.
+Repositorio de la asignatura con la implementación de la interfaz web, consumo de la API de OMDb y desarrollo de un backend completo con NodeJS.
 
 ## 🌐 Enlaces del Proyecto
-**GitHub Pages (Frontend):** https://github.com/iancizug/ancizu-sta.git
+**GitHub Pages (Frontend):** https://iancizug.github.io/ancizu-sta/
 
 ---
 
@@ -13,83 +13,102 @@ Repositorio de la asignatura con la implementación de la interfaz web, consumo 
 **URL Base:** `http://localhost:3000`
 **Herramienta de prueba recomendada:** `cURL` (Terminal)
 
-### 1. Códigos de Estado (HTTP Status Codes)
-- 200 OK : Petición correcta.
-- 201 Created : Recurso creado con éxito.
-- 204 No Content : Borrado con éxito (no devuelve texto).
-- 400 Bad Request : Petición mal formada.
-- 404 Not Found : Ruta o ID no existe.
-- 500 Server Error: Error interno del servidor.
+## 1. Gestión de Actores ##
 
-### 2. Recurso: Películas (/peliculas)
+**Listar todos los actores**
 
---- OBTENER TODAS LAS PELÍCULAS --- 
-Comando : curl -X GET "http://localhost:3000/peliculas" 
-Salida : 200 OK (Array JSON con todas las películas)
+Comando: curl http://localhost:3000/actores
 
---- OBTENER UNA PELÍCULA POR ID --- 
-Comando : curl -X GET "http://localhost:3000/peliculas/1" 
-Salida : 200 OK 
-{ 
-  "id": 1, 
-  "nombre": "Matrix", 
-  "año": 1999, 
-  "actores": [ "Keanu Reeves", "Carrie-Anne Moss", "Laurence Fishburne" ] 
-}
+Función: Obtiene el array completo con todos los actores registrados en el sistema.
 
---- CREAR UNA PELÍCULA --- 
-Comando : curl -X POST "http://localhost:3000/peliculas?nombre=Dune&ano=2021" 
-Salida : 201 Created (Devuelve la película creada con su nuevo ID)
+Salida esperada (200 OK): [{"id":1,"nombreCompleto":"Leonardo DiCaprio","añoNacimiento":1974}]
 
---- MODIFICAR PELÍCULA COMPLETA --- 
-Comando : curl -X PUT "http://localhost:3000/peliculas/1?nombre=Dune+Parte+2&ano=2024" 
-Salida : 200 OK (Devuelve la película con los datos reemplazados)
+**Crear un nuevo actor**
 
---- MODIFICAR PELÍCULA PARCIALMENTE --- 
-Comando : curl -X PATCH "http://localhost:3000/peliculas/1?ano=2025" 
-Salida : 200 OK (Devuelve la película actualizada)
+Comando: curl -X POST http://localhost:3000/actores -H "Content-Type: application/json" -d "{\"nombreCompleto\": \"Keanu Reeves\", \"añoNacimiento\": 1964}"
 
---- BORRAR UNA PELÍCULA --- 
-Comando : curl -X DELETE "http://localhost:3000/peliculas/1" 
-Salida : 204 No Content (No imprime nada en consola, solo vuelve al prompt)
+Función: Da de alta un nuevo actor asignándole un ID automático.
 
-### 3. Recurso: Actores (/actores)
+Salida esperada (201 Created): {"id":2,"nombreCompleto":"Keanu Reeves","añoNacimiento":1964}
 
---- OBTENER TODOS LOS ACTORES --- 
-Comando : curl -X GET "http://localhost:3000/actores" 
-Salida : 200 OK (Array JSON con todos los actores)
+**Modificar datos de un actor (Nombre o Año)**
 
---- OBTENER UN ACTOR POR ID --- 
-Comando : curl -X GET "http://localhost:3000/actores/1" 
-Salida : 200 OK (JSON del actor solicitado)
+Comando: curl -X PATCH http://localhost:3000/actores/1 -H "Content-Type: application/json" -d "{\"añoNacimiento\": 1975}"
 
---- CREAR UN ACTOR --- 
-Comando : curl -X POST "http://localhost:3000/actores?nombre=Zendaya+Maree&ano_nacimiento=1996" 
-Salida : 201 Created (Devuelve el actor creado con su ID)
+Función: Actualiza de forma parcial el nombre completo o el año de nacimiento del actor especificado por su ID.
 
---- MODIFICAR ACTOR COMPLETO --- 
-Comando : curl -X PUT "http://localhost:3000/actores/1?nombre=Keanu+Charles+Reeves&ano_nacimiento=2024" 
-Salida : 200 OK
+Salida esperada (200 OK): {"id":1,"nombreCompleto":"Leonardo DiCaprio","añoNacimiento":1975}
 
---- MODIFICAR ACTOR PARCIAL --- 
-Comando : curl -X PATCH "http://localhost:3000/actores/1?nombre=Keanu+Charles+Reeves" 
-Salida : 200 OK
+**Borrar un actor**
 
---- BORRAR UN ACTOR --- 
-Comando : curl -X DELETE "http://localhost:3000/actores/1" 
-Info : Borrado en cascada. Elimina al actor y busca en peliculas.json para borrar su ID de cualquier reparto. 
-Salida : 204 No Content
+Comando: curl -X DELETE http://localhost:3000/actores/1
 
-### 4. Recurso: Relaciones (Reparto)
+Función: Elimina permanentemente al actor del archivo de datos según su ID.
 
---- AÑADIR UN ACTOR A UNA PELÍCULA --- 
-Comando : curl -X POST "http://localhost:3000/peliculas/1/actores?id_actor=2" 
-Salida : 200 OK (Devuelve la película con el actor añadido)
+Salida esperada (204 No Content): (Sin texto de respuesta, la consola simplemente devuelve el salto de línea).
 
---- AÑADIR VARIOS ACTORES A UNA PELÍCULA --- 
-Comando : curl -X POST "http://localhost:3000/peliculas/1/actores?id_actor=2&id_actor=3" 
-Salida : 200 OK (Devuelve la película con el actor añadido)
+## 2. Gestión de Películas ##
 
---- QUITAR UN ACTOR DE UNA PELÍCULA --- 
-Comando : curl -X DELETE "http://localhost:3000/peliculas/1/actores/2" 
-Salida : 200 OK (Devuelve la película sin el actor ID 2)
+**Listar todas las películas**
+
+Comando: curl http://localhost:3000/peliculas
+
+Función: Devuelve el array completo con todas las películas almacenadas.
+
+Salida esperada (200 OK): [{"id":1,"nombre":"Inception","año":2010,"actores":[1]}]
+
+**Crear una nueva película**
+
+Comando: curl -X POST http://localhost:3000/peliculas -H "Content-Type: application/json" -d "{\"nombre\": \"Matrix\", \"año\": 1999, \"actores\": []}"
+
+Función: Registra una nueva película indicando su nombre, año y un array opcional con los IDs de sus actores.
+
+Salida esperada (201 Created): {"id":2,"nombre":"Matrix","año":1999,"actores":[]}
+
+**Modificar película completa (PUT)**
+
+Comando: curl -X PUT http://localhost:3000/peliculas/1 -H "Content-Type: application/json" -d "{\"nombre\": \"Inception Remastered\", \"año\": 2010, \"actores\": [1]}"
+
+Función: Reemplaza o actualiza por completo los campos principales de la película indicada.
+
+Salida esperada (200 OK): {"id":1,"nombre":"Inception Remastered","año":2010,"actores":[1]}
+
+**Cambiar nombre de una película (PATCH)**
+
+Comando: curl -X PATCH http://localhost:3000/peliculas/1 -H "Content-Type: application/json" -d "{\"nombre\": \"Origen\"}"
+
+Función: Modifica únicamente el título de la película.
+
+Salida esperada (200 OK): {"id":1,"nombre":"Origen","año":2010,"actores":[1]}
+
+**Cambiar año de una película (PATCH)**
+
+Comando: curl -X PATCH http://localhost:3000/peliculas/1 -H "Content-Type: application/json" -d "{\"año\": 2011}"
+
+Función: Modifica únicamente el año de lanzamiento de la película.
+
+Salida esperada (200 OK): {"id":1,"nombre":"Inception","año":2011,"actores":[1]}
+
+**Añadir un actor a una película (PATCH)**
+
+Comando: curl -X PATCH http://localhost:3000/peliculas/1 -H "Content-Type: application/json" -d "{\"addActor\": 2}"
+
+Función: Añade el ID de un actor al array de actores de esa película (si no estaba ya añadido).
+
+Salida esperada (200 OK): {"id":1,"nombre":"Inception","año":2010,"actores":[1, 2]}
+
+**Quitar un actor de una película (PATCH)**
+
+Comando: curl -X PATCH http://localhost:3000/peliculas/1 -H "Content-Type: application/json" -d "{\"removeActor\": 2}"
+
+Función: Elimina el ID del actor especificado del array de actores de la película.
+
+Salida esperada (200 OK): {"id":1,"nombre":"Inception","año":2010,"actores":[1]}
+
+**Borrar una película**
+
+Comando: curl -X DELETE http://localhost:3000/peliculas/1
+
+Función: Elimina la película del sistema según su ID.
+
+Salida esperada (204 No Content): (Sin texto de respuesta).
