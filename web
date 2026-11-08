@@ -1,2 +1,6 @@
 -e "Contenido web 1\nContenido web 2\nContenido web 3" 
+HEAD
 "Cambio conflictivo en main sobre el archivo web" 
+"Modificaci�n en la rama web" 
+"Segundo cambio en la rama web" 
+web
