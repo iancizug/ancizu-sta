@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "nombre": "Inception",
+    "año": 2010,
+    "actores": [
+      1
+    ]
+  },
+  {
+    "id": 2,
+    "nombre": "Matrix",
+    "año": 1999,
+    "actores": []
+  }
+]

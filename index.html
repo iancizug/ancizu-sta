@@ -2,15 +2,24 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Práctica STA</title>
+    <title>Buscador de Películas - STA</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Servicios Telemáticos Avanzados</h1>
-    <p>Página web estática de prueba para la Práctica 1 (Parte 2.2).</p>
-    <form>
-        <input type="text" placeholder="Escribe algo aquí...">
-        <button type="button">Enviar</button>
-    </form>
+    <h1>Buscador de Películas (OMDb API)</h1>
+    
+    <div>
+        <input type="text" id="movieInput" placeholder="Escribe el título de una película...">
+        <button id="searchButton">Buscar</button>
+    </div>
+
+    <div id="result" style="margin-top: 20px;">
+        <h2 id="movieTitle"></h2>
+        <p><strong>Director:</strong> <span id="movieDirector">-</span></p>
+        <p><strong>Año:</strong> <span id="movieYear">-</span></p>
+    </div>
+
+    <!-- Enlazamos el archivo JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
