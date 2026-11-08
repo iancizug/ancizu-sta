@@ -1,19 +1,95 @@
-# Práctica 2 - APIs y Javascript (STA)
+# Práctica - Servicios Telemáticos Avanzados (STA)
 
-Servidor backend desarrollado con Node.js y Express para la gestión de películas y actores utilizando archivos JSON locales.
+Repositorio de la asignatura con la implementación de la interfaz web, consumo de la API de OMDb y desarrollo de un backend completo con Python.
 
-## Endpoints y Pruebas con cURL
+## 🌐 Enlaces del Proyecto
+* **GitHub Pages (Frontend):** [https://p0oncho.github.io/sta/](https://p0oncho.github.io/sta/)
 
-### 1. Actores
+---
 
-**Listar todos los actores (GET):**
-curl http://localhost:3000/actores
+## 📋 Documentación de la API: Películas y Actores
 
-**Listar todas las películas (GET):**
-curl http://localhost:3000/peliculas
+* **Lanzamiento del servidor:** `python server.py`
+* **URL Base:** `http://localhost:8000`
+* **Herramienta de prueba recomendada:** `cURL` (Terminal)
 
-**Crear un actor (POST):**
-curl -X POST http://localhost:3000/actores -H "Content-Type: application/json" -d "{\"nombreCompleto\": \"Keanu Reeves\", \"añoNacimiento\": 1964}"
+### 1. Códigos de Estado (HTTP Status Codes)
+- 200 OK : Petición correcta.
+- 201 Created : Recurso creado con éxito.
+- 204 No Content : Borrado con éxito (no devuelve texto).
+- 400 Bad Request : Petición mal formada.
+- 404 Not Found : Ruta o ID no existe.
+- 500 Server Error: Error interno del servidor.
 
-**Crear una película (POST):**
-curl -X POST http://localhost:3000/peliculas -H "Content-Type: application/json" -d "{\"nombre\": \"Matrix\", \"año\": 1999, \"actores\": [2]}"
+### 2. Recurso: Películas (/peliculas)
+
+--- OBTENER TODAS LAS PELÍCULAS --- 
+Comando : curl -X GET "http://localhost:8000/peliculas" 
+Salida : 200 OK (Array JSON con todas las películas)
+
+--- OBTENER UNA PELÍCULA POR ID --- 
+Comando : curl -X GET "http://localhost:8000/peliculas/1" 
+Salida : 200 OK 
+{ 
+  "id": 1, 
+  "nombre": "Matrix", 
+  "año": 1999, 
+  "actores": [ "Keanu Reeves", "Carrie-Anne Moss", "Laurence Fishburne" ] 
+}
+
+--- CREAR UNA PELÍCULA --- 
+Comando : curl -X POST "http://localhost:8000/peliculas?nombre=Dune&ano=2021" 
+Salida : 201 Created (Devuelve la película creada con su nuevo ID)
+
+--- MODIFICAR PELÍCULA COMPLETA --- 
+Comando : curl -X PUT "http://localhost:8000/peliculas/1?nombre=Dune+Parte+2&ano=2024" 
+Salida : 200 OK (Devuelve la película con los datos reemplazados)
+
+--- MODIFICAR PELÍCULA PARCIALMENTE --- 
+Comando : curl -X PATCH "http://localhost:8000/peliculas/1?ano=2025" 
+Salida : 200 OK (Devuelve la película actualizada)
+
+--- BORRAR UNA PELÍCULA --- 
+Comando : curl -X DELETE "http://localhost:8000/peliculas/1" 
+Salida : 204 No Content (No imprime nada en consola, solo vuelve al prompt)
+
+### 3. Recurso: Actores (/actores)
+
+--- OBTENER TODOS LOS ACTORES --- 
+Comando : curl -X GET "http://localhost:8000/actores" 
+Salida : 200 OK (Array JSON con todos los actores)
+
+--- OBTENER UN ACTOR POR ID --- 
+Comando : curl -X GET "http://localhost:8000/actores/1" 
+Salida : 200 OK (JSON del actor solicitado)
+
+--- CREAR UN ACTOR --- 
+Comando : curl -X POST "http://localhost:8000/actores?nombre=Zendaya+Maree&ano_nacimiento=1996" 
+Salida : 201 Created (Devuelve el actor creado con su ID)
+
+--- MODIFICAR ACTOR COMPLETO --- 
+Comando : curl -X PUT "http://localhost:8000/actores/1?nombre=Keanu+Charles+Reeves&ano_nacimiento=2024" 
+Salida : 200 OK
+
+--- MODIFICAR ACTOR PARCIAL --- 
+Comando : curl -X PATCH "http://localhost:8000/actores/1?nombre=Keanu+Charles+Reeves" 
+Salida : 200 OK
+
+--- BORRAR UN ACTOR --- 
+Comando : curl -X DELETE "http://localhost:8000/actores/1" 
+Info : Borrado en cascada. Elimina al actor y busca en peliculas.json para borrar su ID de cualquier reparto. 
+Salida : 204 No Content
+
+### 4. Recurso: Relaciones (Reparto)
+
+--- AÑADIR UN ACTOR A UNA PELÍCULA --- 
+Comando : curl -X POST "http://localhost:8000/peliculas/1/actores?id_actor=2" 
+Salida : 200 OK (Devuelve la película con el actor añadido)
+
+--- AÑADIR VARIOS ACTORES A UNA PELÍCULA --- 
+Comando : curl -X POST "http://localhost:8000/peliculas/1/actores?id_actor=2&id_actor=3" 
+Salida : 200 OK (Devuelve la película con el actor añadido)
+
+--- QUITAR UN ACTOR DE UNA PELÍCULA --- 
+Comando : curl -X DELETE "http://localhost:8000/peliculas/1/actores/2" 
+Salida : 200 OK (Devuelve la película sin el actor ID 2)
