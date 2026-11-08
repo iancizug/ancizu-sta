@@ -1,22 +1,37 @@
 [
   {
     "id": 1,
-    "nombre": "Inception",
-    "año": 2010,
-    "actores": [
-      1
-    ]
+    "nombre": "The Matrix",
+    "año": 1999,
+    "categoria": "Acción",
+    "actores": [1]
   },
   {
     "id": 2,
-    "nombre": "Matrix",
-    "año": 1999,
-    "actores": []
+    "nombre": "The Devil Wears Prada",
+    "año": 2006,
+    "categoria": "Drama",
+    "actores": [2]
   },
   {
     "id": 3,
-    "nombre": "Interstellar",
-    "año": 2014,
-    "actores": []
+    "nombre": "Forrest Gump",
+    "año": 1994,
+    "categoria": "Drama",
+    "actores": [3]
+  },
+  {
+    "id": 4,
+    "nombre": "Lost in Translation",
+    "año": 2003,
+    "categoria": "Drama",
+    "actores": [4]
+  },
+  {
+    "id": 5,
+    "nombre": "Training Day",
+    "año": 2001,
+    "categoria": "Acción",
+    "actores": [5]
   }
 ]

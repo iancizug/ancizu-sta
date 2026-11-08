@@ -1,17 +1,47 @@
 [
   {
+    "id": 1,
+    "nombreCompleto": "Meryl Streep",
+    "añoNacimiento": 1949
+  },
+  {
     "id": 2,
-    "nombreCompleto": "Keanu Reeves",
-    "añoNacimiento": 1964
+    "nombreCompleto": "Tom Hanks",
+    "añoNacimiento": 1956
   },
   {
     "id": 3,
-    "nombreCompleto": "Keanu Reeves",
-    "añoNacimiento": 1964
+    "nombreCompleto": "Scarlett Johansson",
+    "añoNacimiento": 1984
   },
   {
     "id": 4,
-    "nombreCompleto": "Keanu Reeves",
-    "añoNacimiento": 1964
+    "nombreCompleto": "Denzel Washington",
+    "añoNacimiento": 1954
+  },
+  {
+    "id": 5,
+    "nombreCompleto": "Natalie Portman",
+    "añoNacimiento": 1981
+  },
+  {
+    "id": 6,
+    "nombreCompleto": "Robert Downey Jr.",
+    "añoNacimiento": 1965
+  },
+  {
+    "id": 7,
+    "nombreCompleto": "Charlize Theron",
+    "añoNacimiento": 1975
+  },
+  {
+    "id": 8,
+    "nombreCompleto": "Leonardo DiCaprio",
+    "añoNacimiento": 1974
+  },
+  {
+    "id": 9,
+    "nombreCompleto": "Viola Davis",
+    "añoNacimiento": 1965
   }
 ]

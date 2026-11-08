@@ -1,8 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const fs = require('fs');
 const app = express();
 const PORT = 3000;
 
+app.use(cors())
 app.use(express.json());
 
 const leerDatos = (archivo) => {
@@ -22,10 +24,17 @@ const escribirDatos = (archivo, datos) => {
 
 // Listar películas (200 OK o 500 Server Error)
 app.get('/peliculas', (req, res) => {
-    const peliculas = leerDatos('peliculas.json');
+    let peliculas = leerDatos('peliculas.json');
     if (peliculas === null) {
         return res.status(500).json({ error: "500 Server Error: Error interno del servidor" });
     }
+    
+    // Si viene una categoría por query string, filtramos en el servidor
+    const categoriaFiltro = req.query.categoria;
+    if (categoriaFiltro) {
+        peliculas = peliculas.filter(p => p.categoria && p.categoria.toLowerCase() === categoriaFiltro.toLowerCase());
+    }
+
     res.status(200).json(peliculas);
 });
 

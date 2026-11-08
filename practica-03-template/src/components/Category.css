@@ -1,0 +1,13 @@
+.category-container {
+  margin-bottom: 30px;
+  background-color: #777;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.movies-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding-bottom: 10px;
+}
